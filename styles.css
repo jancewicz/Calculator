@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+}
+
+.wholeContainer {
+    justify-content: center;
+    background-color: aqua;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.titleContainer {
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    margin-top: 20px;
+    font-family: Didot;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 27px;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    color: coral;
+}
+
+.calcShape {
+    margin: 100px;
+    height: 500px;
+    width: 400px;
+    background-color: #c49797;
+    border-radius: 25px;
+    border: 5px solid #5e5e5e;
+    display: flex;
+    justify-content: center;
+
+}
+
+.screenContainer {
+    height: 70px;
+    width: 350px;
+    background-color: rgba(255, 255, 255, 0.4);
+    display: flex;
+    margin-top: 50px;
+    border-radius: 25px;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+}
