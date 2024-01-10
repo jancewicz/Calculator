@@ -67,7 +67,7 @@ body {
     margin-right: 15px;
 }
 
-.power {
+.powerBtn {
     height: 20px;
     width: 80px;
     background-color: rgba(255, 0, 0, 0.7);
@@ -155,8 +155,15 @@ body {
     border-radius: 10px;
 }
 
+.btn:hover {
+    background-color: silver;
+}
 
-#keybord {
+#pwr:hover {
+    background-color: palevioletred;
+}
+
+.btn {
     font-size: 40px;
     font-weight: 700;
     color: black;
