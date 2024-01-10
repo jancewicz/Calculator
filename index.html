@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/calculator');
+    </style>
 </head>
 
 <body>
@@ -22,8 +25,9 @@
                 </div>
                 <div class="upperBottom">
                     <div class="screenContainer">
-                        <div class="screen">
-                            <p> 123</p> <!--JUST A TEST HOW THE NUMS DISPLAY ON THE SCREEN-->
+                        <div class="screen" id="displayScreen">
+                            <span class="showDigits" id="screen"> 0</span>
+                            <!--JUST A TEST HOW THE NUMS DISPLAY ON THE SCREEN-->
                         </div>
                     </div>
                 </div>
@@ -31,66 +35,66 @@
             <div class="middle">
                 <div class="buttonsContainerLeft">
                     <div class="numSquare btn">
-                        <button type="button" class="mark seven btn" id="7">7</button>
+                        <button type="button" class="mark seven numericBtn" id="7">7</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark four btn" id="4">4</button>
+                        <button type="button" class="mark four numericBtn" id="4">4</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark one btn" id="1">1</button>
+                        <button type="button" class="mark one numericBtn" id="1">1</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark cancel btn" id="cancel">C</button>
+                        <button type="button" class="mark cancel functionalBtn" id="cancel">C</button>
                     </div>
                 </div>
                 <div class="buttonsContainerMiddle">
                     <div class="numSquare btn">
-                        <button type="button" class="mark eight btn" id="8">8</button>
+                        <button type="button" class="mark eight numericBtn" id="8">8</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark nine btn" id="9">9</button>
+                        <button type="button" class="mark nine numericBtn" id="9">9</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark divide btn" id="divide">÷</button>
+                        <button type="button" class="mark divide functionalBtn" id="divide">÷</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark five btn" id="5">5</button>
+                        <button type="button" class="mark five numericBtn" id="5">5</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark six btn" id="6">6</button>
+                        <button type="button" class="mark six numericBtn" id="6">6</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark percent btn" id="percent">%</button>
+                        <button type="button" class="mark percent functionalBtn" id="percent">%</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark two btn" id="2">2</button>
+                        <button type="button" class="mark two numericBtn" id="2">2</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark three btn" id="3">3</button>
+                        <button type="button" class="mark three numericBtn" id="3">3</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark negative btn" id="turnToNegative">+/-</button>
+                        <button type="button" class="mark negative functionalBtn" id="turnToNegative">+/-</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark zero btn" id="0">0</button>
+                        <button type="button" class="mark zero numericBtn" id="0">0</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark dot btn" id="dot">.</button>
+                        <button type="button" class="mark dot functionalBtn" id="dot">.</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark equal btn" id="equals">=</button>
+                        <button type="button" class="mark equal functionalBtn" id="equals">=</button>
                     </div>
 
                 </div>
                 <div class="buttonsContainerRight">
                     <div class="numSquare btn">
-                        <button type="button" class="mark multiply btn" id="multiply">X</button>
+                        <button type="button" class="mark multiply functionalBtn" id="multiply">X</button>
                     </div>
                     <div class="numSquare btn">
-                        <button type="button" class="mark minus btn" id="subtract">-</button>
+                        <button type="button" class="mark minus functionalBtn" id="subtract">-</button>
                     </div>
                     <div class="numSquare btn" id="add">
-                        <button type="button" class="mark plus btn" id="plus">+</button>
+                        <button type="button" class="mark plus functionalBtn" id="plus">+</button>
                     </div>
                 </div>
             </div>
