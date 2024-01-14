@@ -1,10 +1,13 @@
-// work with this let currentValue = 0; as starting point, then current value is updated and displayed on screen! with innerText
-// check function - window.onload
 let currentValue = 0;
+let clickCount = 0;
+let firstNum;
+let secondNum;
+let isActive;
 
 
 function setDisplayToZero() {
     currentValue = 0;
+    clickCount = 0;
     document.getElementById("displayScreen").querySelector("span").textContent = currentValue;
 }
 
@@ -21,9 +24,10 @@ function turnCalculatorOn() {
 function powerButton() {
     const powerButton = document.getElementById("pwr");
     powerButton.addEventListener("click", turnCalculatorOn);
+    powerButton.addEventListener("click", turnButtonBackgroundBack);
 }
 
-//find difference in these two functions
+
 function updateScreenDisplay() {
     document.getElementById("screen").innerText = currentValue;
 }
@@ -41,10 +45,9 @@ function numericButtons() {
     buttons.forEach(button => {
         button.addEventListener("click", function (e) {
             numericButtonClicked = savePressedKey(e);
-            numericButtonClicked = parseInt(numericButtonClicked);
-            console.log(numericButtonClicked);
-            currentValue += numericButtonClicked;
-            updateScreenDisplay(currentValue);
+            currentValue = currentValue * 10 + parseInt(numericButtonClicked);
+            updateScreenDisplay();
+            turnButtonBackgroundBack();
         });
     });
 }
@@ -64,6 +67,53 @@ function functionalButtons() {
 function cancelButton() {
     const cancelButton = document.getElementById("cancel");
     cancelButton.addEventListener("click", setDisplayToZero);
+    cancelButton.addEventListener("click", turnButtonBackgroundBack);
+}
+
+function turnButtonBackgroundBack() {
+    const functionalButtons = document.querySelectorAll(".functionalBtn");
+    functionalButtons.forEach((button) => {
+        button.style.backgroundColor = "gray";
+    })
+}
+
+
+
+function addButton() {
+    const addButton = document.getElementById("plus");
+
+    addButton.addEventListener("click", () => {
+        if (clickCount === 0) {
+            activeButton(addButton);
+            firstNum = currentValue;
+            currentValue = 0;
+            clickCount++;
+        }
+
+    })
+}
+
+
+
+function equalsButton() {
+    const equalsButton = document.getElementById("equals");
+    equalsButton.addEventListener("Click", () => {
+        activeButton(equalsButton);
+        secondNum = currentValue;
+        currentValue = add(firstNum, secondNum);
+        updateScreenDisplay();
+        turnButtonBackgroundBack();
+        console.log(currentValue);
+        clickCount = 0;
+    });
+}
+
+
+
+
+function activeButton(functionalButton) {
+    isActive = true;
+    functionalButton.style.backgroundColor = "rgba(247, 112, 8, 0.91)"
 }
 
 
@@ -101,5 +151,7 @@ powerButton(currentValue);
 numericButtons(currentValue);
 let functionalButtonClicked = functionalButtons();
 cancelButton();
+addButton();
+equalsButton();
 
 
