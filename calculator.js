@@ -89,6 +89,14 @@ function addButton() {
             currentValue = 0;
             clickCount++;
         }
+        if (clickCount >= 1) {
+            activeButton(addButton);
+            secondNum = currentValue;
+            currentValue = add(firstNum, secondNum)
+            updateScreenDisplay();
+            firstNum = currentValue;
+            currentValue = 0;
+        }
 
     })
 }
