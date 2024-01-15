@@ -86,7 +86,7 @@ function activeButton(functionalButton) {
     functionalButton.style.backgroundColor = "rgba(247, 112, 8, 0.91)"
 }
 
-
+// AFTER EQUALS BUTTON IT DOUBLES THE RESULT -> FIX THIS
 function addButton() {
     const addButton = document.getElementById("plus");
     addButton.addEventListener("click", () => {
@@ -105,26 +105,29 @@ function addButton() {
             updateScreenDisplay();
             firstNum = currentValue;
             currentValue = 0;
+
         }
     });
 }
 
-
+// AFTER EQUALS BUTTON IT POWERS THE RESULT -> FIX THIS
 function multiplyButton() {
     const multiplyButton = document.getElementById("multiply");
     multiplyButton.addEventListener("click", () => {
         if (clickCount === 0) {
             activeButton(multiplyButton);
             firstNum = currentValue;
-            //currentValue = 0;
+            currentValue = 1; //
             clickCount++;
             operator = multiply;
         }
         if (clickCount >= 1) {
             activeButton(multiplyButton);
+            operator = multiply;
             secondNum = currentValue;
-            updateScreenDisplay();
             currentValue = operator(firstNum, secondNum);
+            updateScreenDisplay();
+            firstNum = currentValue;
             currentValue = 0;
         }
     })
@@ -140,7 +143,7 @@ function equalsButton() {
             updateScreenDisplay();
             console.log(`first: ${firstNum}, second: ${secondNum}`);
             firstNum = currentValue;
-            secondNum = 0;
+
             operator = null;
         };
     });
