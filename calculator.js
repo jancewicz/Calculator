@@ -1,8 +1,8 @@
 let currentValue = 0;
 let clickCount = 0;
-let firstNum;
-let secondNum;
-let isActive;
+let firstNum = 0;
+let secondNum = 0;
+let operator = null;
 
 
 function setDisplayToZero() {
@@ -59,9 +59,14 @@ function functionalButtons() {
         button.addEventListener("click", function (e) {
             functionalButtonClicked = savePressedKey(e);
             console.log(functionalButtonClicked);
+            switch (functionalButtonClicked) {
+                case "add":
+                    operator = add;
+                    break
+            }
         });
     });
-    return functionalButtonClicked;
+
 }
 
 function cancelButton() {
@@ -77,57 +82,97 @@ function turnButtonBackgroundBack() {
     })
 }
 
+function activeButton(functionalButton) {
+    functionalButton.style.backgroundColor = "rgba(247, 112, 8, 0.91)"
+}
 
 
 function addButton() {
     const addButton = document.getElementById("plus");
-
     addButton.addEventListener("click", () => {
         if (clickCount === 0) {
             activeButton(addButton);
             firstNum = currentValue;
             currentValue = 0;
             clickCount++;
+            operator = add;
         }
         if (clickCount >= 1) {
             activeButton(addButton);
+            operator = add;
             secondNum = currentValue;
-            currentValue = add(firstNum, secondNum)
+            currentValue = add(firstNum, secondNum);
             updateScreenDisplay();
             firstNum = currentValue;
             currentValue = 0;
         }
+    });
+}
 
+
+function multiplyButton() {
+    const multiplyButton = document.getElementById("multiply");
+    multiplyButton.addEventListener("click", () => {
+        if (clickCount === 0) {
+            activeButton(multiplyButton);
+            firstNum = currentValue;
+            //currentValue = 0;
+            clickCount++;
+            operator = multiply;
+        }
+        if (clickCount >= 1) {
+            activeButton(multiplyButton);
+            secondNum = currentValue;
+            updateScreenDisplay();
+            currentValue = operator(firstNum, secondNum);
+            currentValue = 0;
+        }
+    })
+}
+
+
+function equalsButton() {
+    const equalsButton = document.getElementById("equals");
+    equalsButton.addEventListener("click", () => {
+        if (operator) {
+            secondNum = currentValue;
+            currentValue = operator(firstNum, secondNum)
+            updateScreenDisplay();
+            console.log(`first: ${firstNum}, second: ${secondNum}`);
+            firstNum = currentValue;
+            secondNum = 0;
+            operator = null;
+        };
+    });
+}
+
+function turnToNegativeButton() {
+    const negativeButton = document.getElementById("turnToNegative");
+    negativeButton.addEventListener("click", () => {
+        currentValue = currentValue * (-1)
+        updateScreenDisplay();
+    })
+}
+
+function percentButton() {
+    const percentButton = document.getElementById("percent");
+    percentButton.addEventListener("click", () => {
+        currentValue = currentValue / 100;
+        updateScreenDisplay();
+    })
+}
+
+function makeDecimalButton() {
+    const makeDecimalButton = document.getElementById("dot");
+    makeDecimalButton.addEventListener("click", () => {
+        // currentValue = 
     })
 }
 
 
 
-function equalsButton() {
-    const equalsButton = document.getElementById("equals");
-    equalsButton.addEventListener("Click", () => {
-        activeButton(equalsButton);
-        secondNum = currentValue;
-        currentValue = add(firstNum, secondNum);
-        updateScreenDisplay();
-        turnButtonBackgroundBack();
-        console.log(currentValue);
-        clickCount = 0;
-    });
-}
 
-
-
-
-function activeButton(functionalButton) {
-    isActive = true;
-    functionalButton.style.backgroundColor = "rgba(247, 112, 8, 0.91)"
-}
-
-
-
-
-// Math
+// Math for operator
 function add(a, b) {
     return a + b;
 }
@@ -144,22 +189,19 @@ function divide(a, b) {
     return a / b;
 }
 
-function turnToNegative(num) {
-    return num * (-1);
-}
-
-function percent(num) {
-    return num / 100;
-}
 
 
 
 
 powerButton(currentValue);
 numericButtons(currentValue);
-let functionalButtonClicked = functionalButtons();
+functionalButtons();
 cancelButton();
 addButton();
+multiplyButton();
 equalsButton();
+turnToNegativeButton();
+percentButton();
+makeDecimalButton();
 
 
