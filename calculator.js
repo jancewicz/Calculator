@@ -101,11 +101,33 @@ function addButton() {
             activeButton(addButton);
             operator = add;
             secondNum = currentValue;
-            currentValue = add(firstNum, secondNum);
+            currentValue = operator(firstNum, secondNum);
             updateScreenDisplay();
             firstNum = currentValue;
             currentValue = 0;
 
+        }
+    });
+}
+
+function subtractButton() {
+    const subtractButton = document.getElementById("subtract");
+    subtractButton.addEventListener("click", () => {
+        if (clickCount === 0) {
+            activeButton(subtractButton);
+            firstNum = currentValue;
+            currentValue = 0;
+            clickCount++;
+            operator = subtract;
+        }
+        if (clickCount >= 1) {
+            activeButton(subtractButton);
+            operator = subtract;
+            secondNum = currentValue;
+            currentValue = operator(firstNum, secondNum);
+            updateScreenDisplay();
+            firstNum = currentValue;
+            currentValue = 0;
         }
     });
 }
@@ -117,7 +139,7 @@ function multiplyButton() {
         if (clickCount === 0) {
             activeButton(multiplyButton);
             firstNum = currentValue;
-            currentValue = 1; //
+            currentValue = 1;
             clickCount++;
             operator = multiply;
         }
@@ -130,8 +152,32 @@ function multiplyButton() {
             firstNum = currentValue;
             currentValue = 0;
         }
-    })
+    });
 }
+
+function divisionButton() {
+    const divisionButton = document.getElementById("divide");
+    divisionButton.addEventListener("click", () => {
+        if (clickCount === 0) {
+            activeButton(divisionButton);
+            firstNum = currentValue;
+            currentValue = 1; // 
+            clickCount++;
+            operator = divide;
+        }
+        if (clickCount >= 1) {
+            activeButton(divisionButton);
+            operator = divide;
+            secondNum = currentValue;
+            currentValue = operator(firstNum, secondNum);
+            updateScreenDisplay();
+            firstNum = currentValue;
+            currentValue = 0;
+        }
+    }
+    );
+}
+
 
 
 function equalsButton() {
@@ -145,6 +191,10 @@ function equalsButton() {
             firstNum = currentValue;
             operator = null;
             clickCount = 0;
+            if (currentValue === Infinity || isNaN(currentValue)) {
+                setDisplayToZero();
+                document.getElementById("displayScreen").querySelector("span").textContent = "Err";
+            }
         };
     });
 }
@@ -171,7 +221,7 @@ function percentButton() {
 function makeDecimalButton() {
     const makeDecimalButton = document.getElementById("dot");
     makeDecimalButton.addEventListener("click", () => {
-        // currentValue = 
+        activeButton(makeDecimalButton);
     })
 }
 
@@ -179,20 +229,20 @@ function makeDecimalButton() {
 
 
 // Math for operator
-function add(a, b) {
-    return a + b;
+function add(num1, num2) {
+    return (num1 + num2);
 }
 
-function subtract(a, b) {
-    return a - b;
+function subtract(num1, num2) {
+    return (num1 - num2);
 }
 
-function multiply(a, b) {
-    return a * b;
+function multiply(num1, num2) {
+    return (num1 * num2);
 }
 
-function divide(a, b) {
-    return a / b;
+function divide(num1, num2) {
+    return (num1 / num2);
 }
 
 
@@ -209,5 +259,7 @@ equalsButton();
 turnToNegativeButton();
 percentButton();
 makeDecimalButton();
+divisionButton();
+subtractButton();
 
 
