@@ -2,8 +2,20 @@ let currentValue = 0;
 let clickCount = 0;
 let firstNum = 0;
 let secondNum = 0;
+let activeButton = null;
 let operator = null;
-
+const numericButtons = document.querySelectorAll(".numericBtn");
+const addButton = document.getElementById("plus");
+const subtractButton = document.getElementById("subtract");
+const multiplyButton = document.getElementById("multiply");
+const divisionButton = document.getElementById("divide");
+const equalsButton = document.getElementById("equals");
+const negativeButton = document.getElementById("turnToNegative");
+const percentButton = document.getElementById("percent");
+const decimalButton = document.getElementById("dot");
+const powerButton = document.getElementById("pwr");
+const cancelButton = document.getElementById("cancel");
+const functionalButtons = document.querySelectorAll(".functionalBtn");
 
 function setDisplayToZero() {
     currentValue = 0;
@@ -21,8 +33,7 @@ function turnCalculatorOn() {
     setDisplayToZero();
 }
 
-function powerButton() {
-    const powerButton = document.getElementById("pwr");
+function pressPowerButton() {
     powerButton.addEventListener("click", turnCalculatorOn);
     powerButton.addEventListener("click", turnButtonBackgroundBack);
 }
@@ -39,10 +50,9 @@ function savePressedKey(e) {
 
 }
 
-function numericButtons() {
-    const buttons = document.querySelectorAll(".numericBtn");
+function pressNumericButtons() {
     let numericButtonClicked;
-    buttons.forEach(button => {
+    numericButtons.forEach(button => {
         button.addEventListener("click", function (e) {
             numericButtonClicked = savePressedKey(e);
             currentValue = currentValue * 10 + parseInt(numericButtonClicked);
@@ -52,54 +62,91 @@ function numericButtons() {
     });
 }
 
-function functionalButtons() {
-    const buttons = document.querySelectorAll(".functionalBtn");
+function pressFunctionalButtons() {
     let functionalButtonClicked;
-    buttons.forEach(button => {
+    functionalButtons.forEach(button => {
         button.addEventListener("click", function (e) {
             functionalButtonClicked = savePressedKey(e);
             console.log(functionalButtonClicked);
-            switch (functionalButtonClicked) {
-                case "add":
-                    operator = add;
-                    break
-            }
         });
     });
-
 }
 
-function cancelButton() {
-    const cancelButton = document.getElementById("cancel");
+function pressCancelButton() {
     cancelButton.addEventListener("click", setDisplayToZero);
     cancelButton.addEventListener("click", turnButtonBackgroundBack);
 }
 
 function turnButtonBackgroundBack() {
-    const functionalButtons = document.querySelectorAll(".functionalBtn");
     functionalButtons.forEach((button) => {
         button.style.backgroundColor = "gray";
     })
 }
 
-function activeButton(functionalButton) {
-    functionalButton.style.backgroundColor = "rgba(247, 112, 8, 0.91)"
+function makeActiveButton(button, operation) {
+    switch (operation) {
+        case "add":
+            if (activeButton) {
+                activeButton.style.backgroundColor = "gray";
+                activeButton = null;
+            }
+            if (!activeButton) {
+                button.style.backgroundColor = "rgba(247, 112, 8, 0.91)";
+                activeButton = addButton;
+                operator = add;
+                console.log(`Active button: ${button.id}`);
+                break
+            }
+        case "subtract":
+            if (activeButton) {
+                activeButton.style.backgroundColor = "gray";
+                activeButton = null;
+            }
+            if (!activeButton) {
+                button.style.backgroundColor = "rgba(247, 112, 8, 0.91)";
+                activeButton = subtractButton;
+                console.log(`Active button: ${button.id}`);
+                operator = subtract;
+                break
+            }
+        case "multiply":
+            if (activeButton) {
+                activeButton.style.backgroundColor = "gray";
+                activeButton = null;
+            }
+            if (!activeButton) {
+                button.style.backgroundColor = "rgba(247, 112, 8, 0.91)";
+                activeButton = multiplyButton;
+                console.log(`Active button: ${button.id}`);
+                operator = multiply;
+                break
+            }
+        case "division":
+            if (activeButton) {
+                activeButton.style.backgroundColor = "gray";
+                activeButton = null;
+            }
+            if (!activeButton) {
+                button.style.backgroundColor = "rgba(247, 112, 8, 0.91)";
+                activeButton = divisionButton;
+                console.log(`Active button: ${button.id}`);
+                operator = divide;
+                break
+            }
+    }
 }
 
 
-function addButton() {
-    const addButton = document.getElementById("plus");
+function pressAddButton() {
     addButton.addEventListener("click", () => {
         if (clickCount === 0) {
-            activeButton(addButton);
+            makeActiveButton(addButton, "add");
             firstNum = currentValue;
             currentValue = 0;
             clickCount++;
-            operator = add;
         }
         if (clickCount >= 1) {
-            activeButton(addButton);
-            operator = add;
+            makeActiveButton(addButton, "add");
             secondNum = currentValue;
             currentValue = operator(firstNum, secondNum);
             updateScreenDisplay();
@@ -110,19 +157,16 @@ function addButton() {
     });
 }
 
-function subtractButton() {
-    const subtractButton = document.getElementById("subtract");
+function pressSubtractButton() {
     subtractButton.addEventListener("click", () => {
         if (clickCount === 0) {
-            activeButton(subtractButton);
+            makeActiveButton(subtractButton, "subtract");
             firstNum = currentValue;
             currentValue = 0;
             clickCount++;
-            operator = subtract;
         }
         if (clickCount >= 1) {
-            activeButton(subtractButton);
-            operator = subtract;
+            makeActiveButton(subtractButton, "subtract");
             secondNum = currentValue;
             currentValue = operator(firstNum, secondNum);
             updateScreenDisplay();
@@ -132,20 +176,16 @@ function subtractButton() {
     });
 }
 
-
-function multiplyButton() {
-    const multiplyButton = document.getElementById("multiply");
+function pressMultiplyButton() {
     multiplyButton.addEventListener("click", () => {
         if (clickCount === 0) {
-            activeButton(multiplyButton);
+            makeActiveButton(multiplyButton, "multiply");
             firstNum = currentValue;
             currentValue = 1;
             clickCount++;
-            operator = multiply;
         }
         if (clickCount >= 1) {
-            activeButton(multiplyButton);
-            operator = multiply;
+            makeActiveButton(multiplyButton, "multiply");
             secondNum = currentValue;
             currentValue = operator(firstNum, secondNum);
             updateScreenDisplay();
@@ -155,33 +195,26 @@ function multiplyButton() {
     });
 }
 
-function divisionButton() {
-    const divisionButton = document.getElementById("divide");
+function pressDivisionButton() {
     divisionButton.addEventListener("click", () => {
         if (clickCount === 0) {
-            activeButton(divisionButton);
+            makeActiveButton(divisionButton, "division");
             firstNum = currentValue;
-            currentValue = 1; // 
+            currentValue = 1;
             clickCount++;
-            operator = divide;
         }
         if (clickCount >= 1) {
-            activeButton(divisionButton);
-            operator = divide;
+            makeActiveButton(divisionButton, "division");
             secondNum = currentValue;
             currentValue = operator(firstNum, secondNum);
             updateScreenDisplay();
             firstNum = currentValue;
             currentValue = 0;
         }
-    }
-    );
+    });
 }
 
-
-
-function equalsButton() {
-    const equalsButton = document.getElementById("equals");
+function pressEqualsButton() {
     equalsButton.addEventListener("click", () => {
         if (operator) {
             secondNum = currentValue;
@@ -199,34 +232,28 @@ function equalsButton() {
     });
 }
 
-
-
-
 function turnToNegativeButton() {
-    const negativeButton = document.getElementById("turnToNegative");
     negativeButton.addEventListener("click", () => {
         currentValue = currentValue * (-1)
         updateScreenDisplay();
     })
 }
 
-function percentButton() {
-    const percentButton = document.getElementById("percent");
+function pressPercentButton() {
     percentButton.addEventListener("click", () => {
         currentValue = currentValue / 100;
         updateScreenDisplay();
     })
 }
 
+// buggy 
 function makeDecimalButton() {
-    const makeDecimalButton = document.getElementById("dot");
-    makeDecimalButton.addEventListener("click", () => {
-        activeButton(makeDecimalButton);
+    decimalButton.addEventListener("click", () => {
+        decimalValue = currentValue + ".";
+        currentValue = decimalValue;
+        updateScreenDisplay();
     })
 }
-
-
-
 
 // Math for operator
 function add(num1, num2) {
@@ -245,21 +272,32 @@ function divide(num1, num2) {
     return (num1 / num2);
 }
 
+// doesn't work
+function limitInputWidth() {
+    const inputOnScreen = document.getElementById("screen");
+    const screenDisplay = document.querySelector(".screenContainer");
+    const maxScreenWidth = screenDisplay.clientWidth;
+    const inputValue = parseFloat(inputOnScreen.textContent);
 
 
+    if (!isNaN(inputValue) && inputValue > maxScreenWidth) {
+        inputOnScreen.textContent = maxScreenWidth;
+    }
+}
+document.getElementById("displayScreen").addEventListener("input", limitInputWidth);
 
-
-powerButton(currentValue);
-numericButtons(currentValue);
-functionalButtons();
-cancelButton();
-addButton();
-multiplyButton();
-equalsButton();
+pressPowerButton();
+pressNumericButtons();
+pressFunctionalButtons();
+pressCancelButton();
+pressAddButton();
+pressMultiplyButton();
+pressEqualsButton();
 turnToNegativeButton();
-percentButton();
+pressPercentButton();
 makeDecimalButton();
-divisionButton();
-subtractButton();
+pressDivisionButton();
+pressSubtractButton();
+limitInputWidth();
 
 
