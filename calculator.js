@@ -63,11 +63,9 @@ function pressNumericButtons() {
 }
 
 function pressFunctionalButtons() {
-    let functionalButtonClicked;
     functionalButtons.forEach(button => {
         button.addEventListener("click", function (e) {
-            functionalButtonClicked = savePressedKey(e);
-            console.log(functionalButtonClicked);
+            savePressedKey(e);
         });
     });
 }
@@ -271,9 +269,10 @@ function pressPercentButton() {
 // buggy 
 function makeDecimalButton() {
     decimalButton.addEventListener("click", () => {
-        decimalValue = currentValue + ".";
-        currentValue = decimalValue;
-        updateScreenDisplay();
+        if (!currentValue.toString().includes(".")) {
+            currentValue = currentValue + ".";
+            updateScreenDisplay();
+        }
     })
 }
 
@@ -297,16 +296,15 @@ function divide(num1, num2) {
 
 // doesn't work
 function limitInputWidth() {
-    const inputOnScreen = document.getElementById("screen");
-    const screenDisplay = document.querySelector(".screenContainer");
-    const maxScreenWidth = screenDisplay.clientWidth;
-    const inputValue = parseFloat(inputOnScreen.textContent);
-
+    const displayedScreen = document.getElementById("displayScreen").querySelector("span")
+    const screenContainer = document.querySelector(".screenContainer");
+    const maxScreenWidth = screenContainer.offsetWidth;
 
     if (!isNaN(inputValue) && inputValue > maxScreenWidth) {
         inputOnScreen.textContent = maxScreenWidth;
     }
 }
+
 document.getElementById("displayScreen").addEventListener("input", limitInputWidth);
 
 pressPowerButton();
