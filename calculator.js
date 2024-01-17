@@ -133,6 +133,28 @@ function makeActiveButton(button, operation) {
                 operator = divide;
                 break
             }
+        case "percent":
+            if (activeButton) {
+                activeButton.style.backgroundColor = "gray";
+                activeButton = null;
+            }
+            if (!activeButton) {
+                button.style.backgroundColor = "rgba(247, 112, 8, 0.91)";
+                activeButton = percentButton;
+                currentValue = currentValue / 100;
+                break
+            }
+        case "negative":
+            if (activeButton) {
+                activeButton.style.backgroundColor = "gray";
+                activeButton = null;
+            }
+            if (!activeButton) {
+                button.style.backgroundColor = "rgba(247, 112, 8, 0.91)";
+                activeButton = negativeButton;
+                currentValue = currentValue * (-1);
+                break
+            }
     }
 }
 
@@ -234,14 +256,14 @@ function pressEqualsButton() {
 
 function turnToNegativeButton() {
     negativeButton.addEventListener("click", () => {
-        currentValue = currentValue * (-1)
+        makeActiveButton(negativeButton, "negative");
         updateScreenDisplay();
     })
 }
 
 function pressPercentButton() {
     percentButton.addEventListener("click", () => {
-        currentValue = currentValue / 100;
+        makeActiveButton(percentButton, "percent")
         updateScreenDisplay();
     })
 }
@@ -271,6 +293,7 @@ function multiply(num1, num2) {
 function divide(num1, num2) {
     return (num1 / num2);
 }
+
 
 // doesn't work
 function limitInputWidth() {
