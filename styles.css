@@ -191,3 +191,29 @@ body {
     color: black;
     font-family: 'Times New Roman';
 }
+
+#signatureContainer {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    background-color: #242424;
+    padding: 10px;
+    align-items: center;
+}
+
+#signature,
+#logo {
+    margin: 0;
+
+}
+
+#signature {
+    font-family: Trattatello, fantasy;
+    font-weight: 500;
+    color: coral;
+}
+
+#ghlogo {
+    width: 30px;
+    height: 30px;
+}

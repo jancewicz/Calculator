@@ -162,7 +162,7 @@ function pressAddButton() {
         if (clickCount === 0) {
             makeActiveButton(addButton, "add");
             firstNum = currentValue;
-            currentValue = 0;
+            currentValue = 0; // problem with divison button after add button
             clickCount++;
         }
         if (clickCount >= 1) {
@@ -225,8 +225,13 @@ function pressDivisionButton() {
         }
         if (clickCount >= 1) {
             makeActiveButton(divisionButton, "division");
-            secondNum = currentValue;
-            currentValue = operator(firstNum, secondNum);
+            if (currentValue === 0) {
+                currentValue = 1;
+                secondNum = currentValue;
+            } else {
+                secondNum = currentValue;
+            } // here's the problem after choosing division after plus, second num is set to 0
+            currentValue = operator(firstNum, secondNum); // 
             updateScreenDisplay();
             firstNum = currentValue;
             currentValue = 0;
